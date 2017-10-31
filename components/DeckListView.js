@@ -13,7 +13,7 @@ class DeckListView extends Component {
     getDecks()
   }
 
-  showQuestionView = (deck) => {
+  selectSingleDeck = (deck) => {
     this.props.navigation.navigate(
       'SingleDeckView',
       { deck: deck }
@@ -26,7 +26,7 @@ class DeckListView extends Component {
     return (
       <View style={styles.container}>
         { Object.keys(decks).map( (key) => {
-            return <DeckItem key={key} deck={ decks[key ]} onPress={() => this.showQuestionView(decks[key])} />
+            return <DeckItem key={key} deck={ decks[key ]} onPress={() => this.selectSingleDeck(decks[key])} />
         }) }
       </View>
     )
