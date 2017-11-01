@@ -11,15 +11,17 @@ class SingleDeckView extends Component {
     title: `${navigation.state.params.deck.title}`,
     });
 
-  addCard = () => {
+  addCard = (deck) => {
     this.props.navigation.navigate(
       'NewQuestionView',
+      { deck: deck }
      )
   }
 
-  startQuiz = () => {
+  startQuiz = (deck) => {
     this.props.navigation.navigate(
       'QuizView',
+      { deck: deck }
      )
   }
 
@@ -31,10 +33,10 @@ class SingleDeckView extends Component {
           <Text style={styles.title}>{ deck.title }</Text>
           <Text>{ deck.questions.length } cards </Text>
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.button} onPress={() => this.addCard()}>
+            <TouchableOpacity style={styles.button} onPress={() => this.addCard(deck)}>
               <Text style={styles.buttontext}>Add Card</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.startQuiz()} style={[styles.button, {backgroundColor:'#00B5C1'}]}>
+            <TouchableOpacity onPress={() => this.startQuiz(deck)} style={[styles.button, {backgroundColor:'#00B5C1'}]}>
               <Text style={styles.buttontext}>Start Quiz</Text>
             </TouchableOpacity>
           </View>

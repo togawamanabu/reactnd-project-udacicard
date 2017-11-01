@@ -4,25 +4,12 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  TextInput,
  } from 'react-native'
 
 class NewQuestionView extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.deck.title}`,
-    });
-
-  addCard = () => {
-    this.props.navigation.navigate(
-      'SingleDeckView',
-      { deck: deck }
-     )
-  }
-
-  startQuiz = () => {
-    this.props.navigation.navigate(
-      'SingleDeckView',
-      { deck: deck }
-     )
+  static navigationOptions = {
+    title: 'Add Card',
   }
 
   render() {
@@ -30,14 +17,14 @@ class NewQuestionView extends Component {
 
     return(
       <View style={styles.container}>
-          <Text style={styles.title}>{ deck.title }</Text>
-          <Text>{ deck.questions.length } cards </Text>
-          <View style={styles.buttons}>
-            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>Add Card</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>Start Quiz</Text></TouchableOpacity>
-          </View>
-        </View>
-
+        <Text style={[styles.text, {marginTop:40}]}>Question</Text>
+        <TextInput style={styles.input} />
+        <Text style={styles.text}>Answer</Text>
+        <TextInput style={styles.input} />
+        <TouchableOpacity style={styles.button}>
+          <Text>Create Card</Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 }
@@ -48,15 +35,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center'
   },
-  buttons: {
-    marginTop: 50,
+  text: {
+    marginTop:20,
+  },
+  title: {
+    fontSize:40,
+    textAlign: 'center',
+    padding: 30,
+  },
+  input: {
+    marginTop: 10,
+    height: 40,
+    width:300,
+    borderColor: 'gray',
+    borderWidth: 1,
   },
   button: {
-    marginTop: 20,
+    marginTop: 50,
     width: 200,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#00B5C1',
     alignItems: 'center',
     borderColor: '#bbb',
     borderWidth: StyleSheet.hairlineWidth,
@@ -65,11 +64,6 @@ const styles = StyleSheet.create({
   buttontext: {
     fontSize:16
   },
-  title: {
-    marginTop: 90,
-    fontSize: 50,
-  }
 })
-
 
 export default NewQuestionView

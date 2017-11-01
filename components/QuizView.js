@@ -5,39 +5,77 @@ import {
   TouchableOpacity,
   StyleSheet,
  } from 'react-native'
+ import TextButton from './TextButton'
 
 class QuizView extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.deck.title}`,
-    });
+  static navigationOptions = {
+    title: 'Quiz'
+  }
 
-  addCard = () => {
+  constructor(props) {
+      super(props);
+
+      this.state = {
+        cardIndex: 0,
+        correct: 0,
+      };
+  }
+
+  showAnswer(card) {
     this.props.navigation.navigate(
-      'SingleDeckView',
-      { deck: deck }
+      'AnswerView',
+      { card: card }
      )
   }
 
-  startQuiz = () => {
+  showResult() {
+    const { correct } = this.state
+    const { deck } = this.props.navigation.state.params
+
+    console.log("aaa", correct, deck.questions.length)
     this.props.navigation.navigate(
-      'SingleDeckView',
-      { deck: deck }
+      'ResultView',
+      { point: Math.round((correct/deck.questions.length) * 100) }
      )
+  }
+
+  check(isCorrect) {
+    const { correct, cardIndex } = this.state
+    const { deck } = this.props.navigation.state.params
+
+    console.log(isCorrect, correct)
+
+    if(isCorrect) {
+      this.state.correct += 1
+    }
+
+    if(cardIndex <  deck.questions.length -1) {
+      this.setState({cardIndex: cardIndex + 1})
+    } else {
+      this.showResult()
+    }
   }
 
   render() {
     const { deck } =  this.props.navigation.state.params
+    const { cardIndex } = this.state
+
+    const card = deck.questions[this.state.cardIndex]
 
     return(
       <View style={styles.container}>
-          <Text style={styles.title}>{ deck.title }</Text>
-          <Text>{ deck.questions.length } cards </Text>
-          <View style={styles.buttons}>
-            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>Add Card</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>Start Quiz</Text></TouchableOpacity>
-          </View>
+        <Text>{cardIndex + 1} / {deck.questions.length}</Text>
+        <Text style={styles.title}>{ card.question }</Text>
+        <TextButton onPress={() => this.showAnswer(card)} >Answer</TextButton>
+        <View style={styles.buttons}>
+          <TouchableOpacity onPress={() => this.check(true)} style={[styles.button, {backgroundColor:'#00c16d'}]}>
+            <Text style={styles.buttontext}>Correct</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.check(false)} style={[styles.button, {backgroundColor: '#c10c00'}]}>
+            <Text style={styles.buttontext}>InCorrect</Text>
+          </TouchableOpacity>
         </View>
-
+      </View>
     )
   }
 }
@@ -66,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize:16
   },
   title: {
-    marginTop: 90,
+    marginTop: 5,
     fontSize: 50,
   }
 })

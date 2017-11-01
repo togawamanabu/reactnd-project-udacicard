@@ -4,12 +4,19 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  TextInput,
  } from 'react-native'
 
 class NewDeckView extends Component {
   render() {
     return(
-      <View><Text>new deck</Text></View>
+      <View style={styles.container}>
+        <Text style={styles.title}>What is the title of your new deck ?</Text>
+        <TextInput style={styles.input} />
+        <TouchableOpacity style={styles.button}>
+          <Text>Create Deck</Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 }
@@ -20,15 +27,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center'
   },
-  buttons: {
-    marginTop: 50,
+  title: {
+    fontSize:40,
+    textAlign: 'center',
+    padding: 30,
+  },
+  input: {
+    height: 40,
+    width:300,
+    borderColor: 'gray',
+    borderWidth: 1,
   },
   button: {
-    marginTop: 20,
+    marginTop: 50,
     width: 200,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#00B5C1',
     alignItems: 'center',
     borderColor: '#bbb',
     borderWidth: StyleSheet.hairlineWidth,
@@ -37,10 +52,6 @@ const styles = StyleSheet.create({
   buttontext: {
     fontSize:16
   },
-  title: {
-    marginTop: 90,
-    fontSize: 50,
-  }
 })
 
 

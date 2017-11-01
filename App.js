@@ -11,6 +11,8 @@ import SingleDeckView from './components/SingleDeckView'
 import QuizView from './components/QuizView'
 import NewQuestionView from './components/NewQuestionView'
 import NewDeckView from './components/NewDeckView'
+import AnswerView from './components/AnswerView'
+import ResultView from './components/ResultView'
 
 const Tabs = TabNavigator({
   DeckListView: {
@@ -41,7 +43,13 @@ const MainNavigator = StackNavigator( {
   },
   NewQuestionView: {
     screen: NewQuestionView
-  }
+  },
+  AnswerView: {
+    screen: AnswerView
+  },
+  ResultView: {
+    screen: ResultView
+  },
 })
 
 
