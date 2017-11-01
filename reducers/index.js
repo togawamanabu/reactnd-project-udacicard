@@ -1,4 +1,4 @@
-import { GET_CARDS, GET_DECKS } from '../actions'
+import { GET_CARDS, GET_DECKS, CREATE_DECK, CREATE_CARD} from '../actions'
 
 const tempdata = {
   React: {
@@ -25,10 +25,42 @@ const tempdata = {
   }
 }
 
-function decks(state = {decks:tempdata}, action) {
+function decks(state = tempdata, action) {
   switch (action.type) {
-    case GET_DECKS:
-      return state
+    case CREATE_DECK:
+      return {
+        ...state,
+        [action.title]:{
+          title: action.title,
+          questions: [],
+        }
+      }
+
+    case CREATE_CARD:
+      const { question, answer, decktitle } = action
+
+      const newcard = {
+        question: question,
+        answer, answer,
+      }
+
+      const questions = [...state[decktitle].questions, newcard]
+
+      return {
+        ...state,
+        [decktitle]: {...state[decktitle], questions}
+      }
+
+      // return {
+      //   ...state,
+      //   [decktitle]: {
+      //       ...state[decktitle],
+      //       questions: [
+      //         ...(state[decktitle] || {}).questions,
+      //         ...newcard
+      //       ]
+      //   }
+      // }
 
     default:
       return state

@@ -1,12 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native'
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Alert,
+ } from 'react-native'
 import { getDecks } from '../utils/api'
 import DeckItem from './DeckItem'
 
 class DeckListView extends Component {
   static navigationOptions = {
     title: 'Decks',
+  }
+
+  createNotification() {
+
   }
 
   componentDidMount() {
@@ -16,7 +26,7 @@ class DeckListView extends Component {
   selectSingleDeck = (deck) => {
     this.props.navigation.navigate(
       'SingleDeckView',
-      { deck: deck }
+      { decktitle: deck.title }
      )
   }
 
@@ -42,7 +52,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    decks: state.decks
+    decks: state
   }
 }
 

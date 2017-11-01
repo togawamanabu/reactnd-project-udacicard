@@ -6,14 +6,35 @@ import {
   StyleSheet,
   TextInput,
  } from 'react-native'
+ import { createDeck } from '../actions'
+ import { connect } from 'react-redux'
+ import { addNewDeck } from '../utils/api'
 
 class NewDeckView extends Component {
-  render() {
+  constructor(props) {
+      super(props);
+
+      this.state = {
+        text: "",
+      };
+  }
+
+  addDeck() {
+    const { text } = this.state
+
+    addNewDeck(text)
+
+    this.props.dispatch(createDeck(text))
+
+    this.props.navigation.navigate('Home')
+  }
+
+  render() {  
     return(
       <View style={styles.container}>
         <Text style={styles.title}>What is the title of your new deck ?</Text>
-        <TextInput style={styles.input} />
-        <TouchableOpacity style={styles.button}>
+        <TextInput style={styles.input} onChangeText={(text) => this.setState({text})} />
+        <TouchableOpacity onPress={() => this.addDeck()} style={styles.button}>
           <Text>Create Deck</Text>
         </TouchableOpacity>
       </View>
@@ -28,7 +49,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   title: {
-    fontSize:40,
+    fontSize:30,
     textAlign: 'center',
     padding: 30,
   },
@@ -55,4 +76,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default NewDeckView
+export default connect()(NewDeckView)

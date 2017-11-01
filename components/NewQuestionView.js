@@ -6,10 +6,38 @@ import {
   StyleSheet,
   TextInput,
  } from 'react-native'
+ import { createCard } from '../actions'
+ import { connect } from 'react-redux'
+ import { addCardToDeck } from '../utils/api'
 
 class NewQuestionView extends Component {
   static navigationOptions = {
     title: 'Add Card',
+  }
+
+  constructor(props) {
+      super(props);
+
+      this.state = {
+        qText: "",
+        aTdxt: "",
+      };
+  }
+
+  addCard() {
+    const { deck } =  this.props.navigation.state.params
+    const { qText, aText } = this.state
+
+    addCardToDeck(deck.title, qText, aText)
+
+    this.props.dispatch(createCard(deck.title, qText, aText))
+
+    this.setState({
+      qText: "",
+      aText: "",
+    })
+
+    this.props.navigation.goBack()
   }
 
   render() {
@@ -18,10 +46,10 @@ class NewQuestionView extends Component {
     return(
       <View style={styles.container}>
         <Text style={[styles.text, {marginTop:40}]}>Question</Text>
-        <TextInput style={styles.input} />
+        <TextInput onChangeText={(text) => this.setState({qText:text})} value={this.state.qText} style={styles.input} />
         <Text style={styles.text}>Answer</Text>
-        <TextInput style={styles.input} />
-        <TouchableOpacity style={styles.button}>
+        <TextInput onChangeText={(text) => this.setState({aText:text})} value={this.state.aText}style={styles.input} />
+        <TouchableOpacity onPress={() => this.addCard()} style={styles.button}>
           <Text>Create Card</Text>
         </TouchableOpacity>
       </View>
@@ -66,4 +94,12 @@ const styles = StyleSheet.create({
   },
 })
 
-export default NewQuestionView
+function mapStateToProps(state) {
+
+  console.log("aaaaaaaaaaa")
+  console.log(state)
+
+  return state
+}
+
+export default connect(mapStateToProps)(NewQuestionView)

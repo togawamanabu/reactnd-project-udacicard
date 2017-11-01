@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
  } from 'react-native'
+ import {
+   clearLocalNotification,
+   setLocalNotification
+ } from '../utils/helpers'
 
 class SingleDeckView extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.deck.title}`,
+    title: `${navigation.state.params.decktitle}`,
     });
 
   addCard = (deck) => {
@@ -23,10 +28,13 @@ class SingleDeckView extends Component {
       'QuizView',
       { deck: deck }
      )
+
+     clearLocalNotification()
+      .then(setLocalNotification)
   }
 
   render() {
-    const { deck } =  this.props.navigation.state.params
+    const deck =  this.props.decks[this.props.navigation.state.params.decktitle]
 
     return(
       <View style={styles.container}>
@@ -75,5 +83,10 @@ const styles = StyleSheet.create({
   }
 })
 
+function mapStateToProps(state) {
+  return {
+    decks: state
+  }
+}
 
-export default SingleDeckView
+export default connect(mapStateToProps)(SingleDeckView)

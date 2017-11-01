@@ -6,6 +6,8 @@ import {
   StyleSheet,
  } from 'react-native'
  import TextButton from './TextButton'
+ import { connect } from 'react-redux'
+ import { getDecks } from '../actions'
 
 class QuizView extends Component {
   static navigationOptions = {
@@ -109,5 +111,11 @@ const styles = StyleSheet.create({
   }
 })
 
+function mapStateToProps(state) {
+  console.log("!!!!BBBBB")
+  console.log(state)
 
-export default QuizView
+  return state
+}
+
+export default connect()(QuizView)
