@@ -4,7 +4,7 @@ export const DECK_STORAGE_KEY = 'UdaciCards:deck'
 
 // return all of the decks
 export function getDecks() {
-  return AsyncStorage.getItem(DECK_STORAGE_KEY)
+  return AsyncStorage.getItem(DECK_STORAGE_KEY )
 }
 
 //add new deck

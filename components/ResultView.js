@@ -10,10 +10,26 @@ import {
 class ResultView extends Component {
   static navigationOptions = {
     title: 'Anser'
+
+
   }
 
   back() {
-    this.props.navigation.navigate('Home')
+    const { deck } =  this.props.navigation.state.params
+
+    this.props.navigation.navigate(
+      'SingleDeckView',
+      { decktitle: deck.title }
+     )
+  }
+
+  restart() {
+    const { deck } =  this.props.navigation.state.params
+
+    this.props.navigation.navigate(
+      'QuizView',
+      { deck: deck }
+     )
   }
 
   render() {
@@ -23,9 +39,15 @@ class ResultView extends Component {
       <View style={styles.container}>
         <Text style={styles.title}>{ point } % Correct! </Text>
 
-        <TouchableOpacity onPress={() => this.back()} style={styles.button}>
-          <Text style={styles.buttontext}>Back Home</Text>
-        </TouchableOpacity>
+        <View style={styles.buttons}>
+          <TouchableOpacity onPress={() => this.restart()} style={styles.button}>
+            <Text style={styles.buttontext}>Restart Quiz</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.back()} style={styles.button}>
+            <Text style={styles.buttontext}>Return to deck</Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
     )
   }
@@ -36,6 +58,9 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor: 'white',
     alignItems: 'center'
+  },
+  buttons: {
+    marginTop: 50,
   },
   button: {
     marginTop: 20,

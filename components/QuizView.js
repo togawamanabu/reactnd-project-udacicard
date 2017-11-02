@@ -37,7 +37,11 @@ class QuizView extends Component {
     console.log("aaa", correct, deck.questions.length)
     this.props.navigation.navigate(
       'ResultView',
-      { point: Math.round((correct/deck.questions.length) * 100) }
+      {
+        point: Math.round((correct/deck.questions.length) * 100),
+        deck: deck,
+      }
+
      )
   }
 

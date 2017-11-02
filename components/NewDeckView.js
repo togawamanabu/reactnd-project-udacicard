@@ -26,10 +26,13 @@ class NewDeckView extends Component {
 
     this.props.dispatch(createDeck(text))
 
-    this.props.navigation.navigate('Home')
+    this.props.navigation.navigate(
+      'SingleDeckView',
+      { decktitle: text }
+     )
   }
 
-  render() {  
+  render() {
     return(
       <View style={styles.container}>
         <Text style={styles.title}>What is the title of your new deck ?</Text>
